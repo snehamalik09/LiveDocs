@@ -4,7 +4,7 @@ import React from 'react'
 
 const Header = ({ children, className }: HeaderProps) => {
     return (
-        <div className={`header bg-dark-100 text-white ${className}`}>
+        <div className={`header bg-dark-100 text-white ${className} border-b-2 border-[#6B7280]`}>
             <Link href='/' className='md:flex-1' >
                 <Image src='/assets/icons/logo.svg' alt='logo' width={120} height={32} className='hidden md:block' />
                 <Image src='/assets/icons/logo-icon.svg' alt='logo' width={32} height={32} className='md:hidden' />

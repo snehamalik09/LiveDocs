@@ -1,0 +1,23 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { Editor } from "@tiptap/react";
+
+interface EditorState {
+  editor: Editor | null;
+}
+
+const initialState: EditorState = {
+  editor: null,
+};
+
+const editorSlice = createSlice({
+  name: "editor",
+  initialState,
+  reducers: {
+    setEditor: (state, action: PayloadAction<any>) => {
+      state.editor = action.payload;
+    },
+  },
+});
+
+export const { setEditor } = editorSlice.actions;
+export default editorSlice.reducer;
