@@ -15,6 +15,7 @@ import Highlight from '@tiptap/extension-highlight'
 import Link from '@tiptap/extension-link'
 import TextAlign from '@tiptap/extension-text-align'
 import { FontSize } from './extensions/FontSize'
+import { LineHeightExtension } from './extensions/LineHeight'
 
 const Editor = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const Editor = () => {
         class: ' print:border-0 focus:outline-none  border-2 border-[#C7C7C7] flex flex-col min-h-screen '
       }
     },
-    extensions: [StarterKit, Strike, FontSize, Color, TableKit.configure({
+    extensions: [StarterKit, Strike, LineHeightExtension, FontSize, Color, TableKit.configure({
       table: { resizable: true },
     }), ImageResize, Underline, FontFamily, Text, TextStyle,
       Highlight.configure({ multicolor: true }), 

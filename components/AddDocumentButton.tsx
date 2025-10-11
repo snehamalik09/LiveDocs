@@ -5,23 +5,28 @@ import { Button } from './ui/button'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
-import { useEffect } from 'react';
-
+import { useCreateDocumentMutation } from '@/store/documentApi';
 
 const AddDocumentButton = () => {
     const router = useRouter();
     const { user, isSignedIn, isLoaded } = useUser();
+    const [createDocument] = useCreateDocumentMutation();
 
     async function addDocumentHandler() {
         try {
-            if (isLoaded && !isSignedIn) {
+            if (user && isSignedIn) {
+                const body = {
+                    title: "Untitled",
+                    ownerId: user.id,
+                    content: "",
+                }
+                const newDoc = await createDocument(body).unwrap();
+                router.push(`/document/${newDoc?._id}`);
+            }
+            else {
                 router.push('/sign-in');
                 return;
             }
-            console.log('button clicked');
-            const id = 23;
-            router.push(`/document/${id}`);
-
         }
         catch (err) {
             console.error("Failed to create room/document", err);

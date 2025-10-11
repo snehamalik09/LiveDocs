@@ -50,7 +50,7 @@ const HeadingButton = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <button className="h-7 min-w-7 shrink-0 flex items-center justify-center rounded-sm px-2 text-white hover:bg-neutral-300/80">
+                <button className="h-7 min-w-7 shrink-0 flex items-center justify-center rounded-sm px-2 text-white bg-dark-350 outline-none cursor-pointer  hover:bg-dark-300/80">
                     <span className='truncate'>{heading}</span>
                     <ChevronDownIcon className="ml-2 size-4 shrink-0" />
                 </button>
@@ -68,7 +68,7 @@ const HeadingButton = () => {
                         key={value}
                         style={{ fontSize }}
                         className={cn(
-                            "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-300/80",
+                            "flex items-center cursor-pointer gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-300/80",
                             (value === 0 && !editor?.isActive("heading")) || (editor?.isActive("heading", { level: value })) && "bg-neutral-200/80"
                         )}
                     >

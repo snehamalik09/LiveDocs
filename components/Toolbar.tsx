@@ -14,6 +14,7 @@ import LinkButton from './LinkButton'
 import ImageButton from './ImageButton'
 import AlignButton from './AlignButton'
 import FontSizeButton from './FontSizeButton'
+import LineHeightButton from './LineHeightButton'
 
 
 const Toolbar = () => {
@@ -108,10 +109,9 @@ const Toolbar = () => {
       <LinkButton/>
       <ImageButton/>
       <AlignButton/>
-      {/* 
+      <LineHeightButton/>
       
-      line height
-      list */}
+      {/* LIST */}
 
       {section[2].map((item) => (
         <ToolBarButton key={item.label} {...item} />

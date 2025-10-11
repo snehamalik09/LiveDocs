@@ -69,12 +69,12 @@ const ImageButton = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <button className={cn('text-sm cursor-pointer text-white h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-2--/80')}>
+                <button className={cn('text-sm text-white h-7 min-w-7 flex items-center justify-center rounded-sm bg-dark-350 outline-none cursor-pointer  hover:bg-dark-300/80')}>
                     <ImageIcon className='size-4' />
                 </button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent>
+            <DropdownMenuContent className='cursor-pointer'>
                 <DropdownMenuItem onClick={upload} >
                     <UploadIcon className='size-4 mr-2' />
                     Upload

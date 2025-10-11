@@ -38,7 +38,7 @@ const TextColorButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-between rounded-sm px-2 text-white hover:bg-neutral-300/80">
+        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-between rounded-sm px-2 text-white bg-dark-350 outline-none cursor-pointer  hover:bg-dark-300/80">
           <span className='text-sm'>A</span>
           <div className='h-0.5 w-full' style={{backgroundColor:color}} />
         </button>

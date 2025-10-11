@@ -13,7 +13,7 @@ interface ToolBarButtonProps {
 
 const ToolBarButton = ({onClick, isActive, icon:Icon} : ToolBarButtonProps) => {
   return (
-   <Button onClick={onClick} className={cn('text-sm cursor-pointer h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-2--/80', isActive && 'bg-neutral-200/80')}>
+   <Button onClick={onClick} className={cn('text-sm h-7 min-w-7 flex items-center justify-center rounded-sm bg-dark-350 outline-none cursor-pointer  hover:bg-dark-300/80', isActive && 'bg-neutral-200/80')}>
     <Icon size={4} />
    </Button>
   )

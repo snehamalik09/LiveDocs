@@ -45,7 +45,7 @@ const FontFamilyButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 w-[150px] shrink-0 flex items-center justify-center rounded-sm px-2 text-white hover:bg-neutral-300/80">
+        <button className="h-7 w-[150px] shrink-0 flex items-center justify-center rounded-sm px-2 text-white bg-dark-350 outline-none cursor-pointer  hover:bg-dark-300/80 ">
           <span className='truncate'>{font}</span>
           <ChevronDownIcon className="ml-2 size-4 shrink-0" />
         </button>
@@ -58,7 +58,7 @@ const FontFamilyButton = () => {
             key={value}
             style={{fontFamily:value}}
             className={cn(
-              "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-300/80",
+              "flex items-center cursor-pointer gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-300/80",
               font === value && "bg-neutral-200/80"
             )}
           >

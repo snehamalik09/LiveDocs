@@ -1,11 +1,13 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import Header from '@/components/Header'
 import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import { currentUser } from '@clerk/nextjs/server'
 import AddDocumentButton from '@/components/AddDocumentButton'
+import { useGetDocumentsQuery } from '@/store/documentApi'
+import DocumentSkeleton from '@/components/DocumentSkeleton'
 
 interface DocumentType {
   title: string;
@@ -15,6 +17,10 @@ interface DocumentType {
 const page = async () => {
   const user = await currentUser();
   const allDocuments: DocumentType[] = [];
+  const isLoading=false;
+  // const {data, isError} = useGetDocumentsQuery();
+
+//  console.log("documents : ", data);
 
   return (
     <div className='home-container'>
@@ -35,8 +41,10 @@ const page = async () => {
         </div>
       </Header>
 
+      {isLoading && <DocumentSkeleton />}
+
       {
-        allDocuments.length > 0 ? (
+        allDocuments.length > 0 && !isLoading ? (
           <div className='document-list-container '>
             <div className='!flex max-w-[780px] w-full !justify-between items-center text-white'>
               <h1 className='text-2xl font-bold'>All Documents</h1>
@@ -55,7 +63,7 @@ const page = async () => {
               </div>
             ))}
           </div>
-        ) : (
+        ) : !isLoading && (
           <div className='document-list-empty bg-dark-350'>
             <Image src='/assets/icons/doc.svg' alt='doc' width={40} height={40} className='mx-auto' />
             <AddDocumentButton />
