@@ -1,5 +1,5 @@
 import React from 'react'
-import {type ColorResult, CirclePicker, SketchPicker} from 'react-color';
+import {type ColorResult, SketchPicker} from 'react-color';
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import {

@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useState, useEffect } from 'react'
-import { HighlighterIcon, Link2Icon } from 'lucide-react';
+import {Link2Icon } from 'lucide-react';
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { cn } from '@/lib/utils'
