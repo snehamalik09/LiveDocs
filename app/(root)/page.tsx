@@ -6,7 +6,6 @@ import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from '@c
 import Image from 'next/image'
 import { currentUser } from '@clerk/nextjs/server'
 import AddDocumentButton from '@/components/AddDocumentButton'
-import { useGetDocumentsQuery } from '@/store/documentApi'
 import DocumentSkeleton from '@/components/DocumentSkeleton'
 
 interface DocumentType {

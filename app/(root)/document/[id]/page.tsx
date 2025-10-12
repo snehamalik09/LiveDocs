@@ -1,13 +1,9 @@
 "use client";
-
-import { ReactNode } from "react";
-import Loader from '@/components/Loader'
 import Header from '@/components/Header'
 import Editor from '@/components/Editor'
 import Toolbar from "@/components/Toolbar";
 import {
   SignInButton,
-  SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,

@@ -7,7 +7,6 @@ import { dark } from "@clerk/themes"
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
-import { store } from "@/store/store"
 import { Providers } from "@/store/Providers"
 
 const fontSans = FontSans({
