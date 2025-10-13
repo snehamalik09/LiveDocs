@@ -1,25 +1,24 @@
 
-import React, { useEffect } from 'react'
+'use client'
+import React from 'react'
 import { Button } from "@/components/ui/button"
 import Header from '@/components/Header'
-import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
-import { currentUser } from '@clerk/nextjs/server'
 import AddDocumentButton from '@/components/AddDocumentButton'
 import DocumentSkeleton from '@/components/DocumentSkeleton'
+import { useGetAllDocumentsByIdQuery } from '@/store/UserApi'
+import { useUser } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
+import { updateColumns } from '@tiptap/extension-table'
 
-interface DocumentType {
-  title: string;
-  created: string;
-};
-
-const page = async () => {
-  const user = await currentUser();
-  const allDocuments: DocumentType[] = [];
-  const isLoading=false;
-  // const {data, isError} = useGetDocumentsQuery();
-
-//  console.log("documents : ", data);
+const page = () => {
+  const router = useRouter();
+  const { user, isLoaded } = useUser();
+  const { data: allDocuments, isLoading, isError, refetch } = useGetAllDocumentsByIdQuery(
+    user?.id || "",
+    { skip: !isLoaded || !user }
+  );
 
   return (
     <div className='home-container'>
@@ -43,19 +42,29 @@ const page = async () => {
       {isLoading && <DocumentSkeleton />}
 
       {
-        allDocuments.length > 0 && !isLoading ? (
+        allDocuments && allDocuments.length > 0 && !isLoading ? (
           <div className='document-list-container '>
             <div className='!flex max-w-[780px] w-full !justify-between items-center text-white'>
               <h1 className='text-2xl font-bold'>All Documents</h1>
-              <AddDocumentButton />
+              <AddDocumentButton refetch={refetch} />
             </div>
             {allDocuments.map((data, index) => (
-              <div key={index} className='document-list-item bg-dark-350 '>
+              <div key={index} className='document-list-item bg-dark-350 cursor-pointer' onClick={() => router.push(`/document/${data._id}`)}>
                 <div className='flex gap-4 lg:gap-8 items-center'>
                   <Image src='/assets/icons/doc.svg' alt='doc' width={60} height={60} className='bg-dark-500 rounded-lg p-1 md:p-2' />
                   <div className='flex flex-col gap-1'>
                     <p className='document-list-title font-bold text-xl text-white'>{data.title}</p>
-                    <p className='text-xs text-[#d8d0d0]'>{data.created}</p>
+                    <p className='text-xs text-[#d8d0d0]'>
+                      {new Date(data.updatedAt).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true, 
+                      })}
+                    </p>
                   </div>
                 </div>
                 <Image src='/assets/icons/delete.svg' alt='delete' width={24} height={24} className='cursor-pointer' />
@@ -65,7 +74,7 @@ const page = async () => {
         ) : !isLoading && (
           <div className='document-list-empty bg-dark-350'>
             <Image src='/assets/icons/doc.svg' alt='doc' width={40} height={40} className='mx-auto' />
-            <AddDocumentButton />
+            <AddDocumentButton refetch={refetch} />
           </div>
         )
       }
@@ -77,3 +86,8 @@ export default page
 
 
 
+// deploy clerk to production
+// webhook for delete and update
+// protectroute when user directly do /document/id on url
+// fontsize api is getting triggered unlimited times
+// add file dropdown on toolabr

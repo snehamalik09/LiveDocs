@@ -7,19 +7,3 @@ export async function GET() {
   const allUsers = await User.find().sort({ createdAt: -1 });
   return NextResponse.json(allUsers);
 }
-
-export async function POST(req: Request) {
-  await connectDB();
-  const body = await req.json();
-
-  const newUser = await User.create({
-    clerkId: body.clerkId,
-    name: body.name,
-    email: body.email,
-    avatarUrl: body.avatarUrl,
-    documents:[]
-  });
-
-  return NextResponse.json(newUser, { status: 201 });
-}
-

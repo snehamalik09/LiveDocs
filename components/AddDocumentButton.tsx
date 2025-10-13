@@ -7,7 +7,11 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import { useCreateDocumentMutation } from '@/store/documentApi';
 
-const AddDocumentButton = () => {
+interface AddDocumentButtonProps{
+    refetch: () => void;
+}
+
+const AddDocumentButton: React.FC<AddDocumentButtonProps> = ({ refetch }) => {
     const router = useRouter();
     const { user, isSignedIn, isLoaded } = useUser();
     const [createDocument] = useCreateDocumentMutation();
@@ -22,6 +26,7 @@ const AddDocumentButton = () => {
                 }
                 const newDoc = await createDocument(body).unwrap();
                 router.push(`/document/${newDoc?._id}`);
+                refetch();
             }
             else {
                 router.push('/sign-in');

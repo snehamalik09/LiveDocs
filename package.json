@@ -42,7 +42,8 @@
     "react-redux": "^9.2.0",
     "svix": "^1.77.0",
     "tailwind-merge": "^3.3.1",
-    "tiptap-extension-resize-image": "^1.3.1"
+    "tiptap-extension-resize-image": "^1.3.1",
+    "use-debounce": "^10.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -9,16 +9,27 @@ import { useDispatch } from "react-redux";
 import { setEditor } from '@/store/editorSlice'
 import Underline from '@tiptap/extension-underline'
 import Text from '@tiptap/extension-text'
-import { FontFamily, TextStyle  } from '@tiptap/extension-text-style'
+import { FontFamily, TextStyle } from '@tiptap/extension-text-style'
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight'
 import Link from '@tiptap/extension-link'
 import TextAlign from '@tiptap/extension-text-align'
 import { FontSize } from './extensions/FontSize'
 import { LineHeightExtension } from './extensions/LineHeight'
+import { useUpdateDocumentMutation } from '@/store/documentApi'
+import { useEffect } from 'react'
+import { useDebouncedCallback } from 'use-debounce';
+import { setAutoSave } from '@/store/editorSlice'
 
-const Editor = () => {
+interface EditorProps {
+  documentId: string;
+  initialContent?: any;
+}
+
+const Editor = ({ documentId, initialContent }: EditorProps) => {
   const dispatch = useDispatch();
+  const [updateDocument] = useUpdateDocumentMutation();
+
 
   const editor = useEditor({
     editorProps: {
@@ -30,34 +41,18 @@ const Editor = () => {
     extensions: [StarterKit, Strike, LineHeightExtension, FontSize, Color, TableKit.configure({
       table: { resizable: true },
     }), ImageResize, Underline, FontFamily, Text, TextStyle,
-      Highlight.configure({ multicolor: true }), 
+      Highlight.configure({ multicolor: true }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
-    Link.configure({
+      Link.configure({
         openOnClick: false,
         autolink: true,
         defaultProtocol: 'https',
         protocols: ['http', 'https'],
       })
     ],
-    content: `
-        <table>
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th colspan="3">Description</th>
-            </tr>
-            <tr>
-              <td>Cyndi Lauper</td>
-              <td>Singer</td>
-              <td>Songwriter</td>
-              <td>Actress</td>
-            </tr>
-          </tbody>
-        </table>
-        
-      `,
+    content: initialContent || { type: "doc", content: [] },
 
     autofocus: true,
     editable: true,
@@ -69,6 +64,34 @@ const Editor = () => {
       dispatch(setEditor(null));
     }
   })
+
+  const saveDocument = useDebouncedCallback(async (content: any) => {
+    if (!documentId) return;
+    try {
+      dispatch(setAutoSave(true));
+      const newDoc = await updateDocument({ id: documentId, data: { content } }).unwrap();
+      console.log('Document autosaved!', newDoc);
+    } catch (err) {
+      console.error('Failed to autosave:', err);
+    }
+    finally {
+      setTimeout(() => dispatch(setAutoSave(false)), 400);
+    }
+  }, 2000);
+
+  useEffect(() => {
+    if (!editor) return;
+
+    const handleUpdate = () => {
+      const json = editor.getJSON();
+      saveDocument(json);
+    };
+
+    editor.on('update', handleUpdate);
+    return () => {
+      editor.off('update', handleUpdate);
+    }
+  }, [editor]);
 
   return (
     <div className="flex justify-center items-start bg-dark-100 pb-[15vh]">

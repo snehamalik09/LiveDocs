@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Types } from 'mongoose';
+import { IDocument } from '@/models/Document.model';
 
 export interface IUser extends Document {
     _id: string;
@@ -21,29 +22,11 @@ export const UserApi = createApi({
             query: () => 'user',
             providesTags: ['User'],
         }),
-        getUserById: builder.query<IUser, string>({
+        getAllDocumentsById: builder.query<IDocument[], string>({
             query: (id) => `user/${id}`,
             providesTags: ['User'],
-        }),
-        createUser: builder.mutation<IUser, Partial<IUser>>({
-            query: (newUser) => ({
-                url: 'user',
-                method: 'POST',
-                body: newUser,
-            }),
-            invalidatesTags: ['User'],
-        }),
-        updateUser: builder.mutation<IUser, { id: string; data: Partial<IUser> }>({
-            query: ({ id, data }) => ({
-                url: `user/${id}`,
-                method: 'PUT',
-                body: data,
-            }),
-            invalidatesTags: ['User'],
         }),
     }),
 });
 
-export const {
-    useGetUserByIdQuery, useCreateUserMutation, useGetUsersQuery, useUpdateUserMutation
-} = UserApi;
+export const {useGetAllDocumentsByIdQuery, useGetUsersQuery} = UserApi;

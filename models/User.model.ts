@@ -1,19 +1,6 @@
 import mongoose, { Schema, Model } from 'mongoose';
 import { Types } from 'mongoose';
-
-
-export interface IDocument extends Document {
-    _id:string;
-    title: string;
-    ownerId: string;
-    content: any;
-    collaborators: {
-        userId: Types.ObjectId;
-        role: 'viewer' | 'editor';
-    }[];
-    createdAt: Date;
-    updatedAt: Date;
-}
+import { IDocument } from './Document.model';
 
 export interface IUser extends Document {
     _id: string;

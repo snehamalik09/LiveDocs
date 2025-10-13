@@ -7,7 +7,7 @@ export interface IDocument extends Document {
     ownerId: string;
     content: any;
     collaborators: {
-        userId: Types.ObjectId;
+        userId: string;
         role: 'viewer' | 'editor';
     }[];
     createdAt: Date;
@@ -16,11 +16,11 @@ export interface IDocument extends Document {
 
 const DocumentSchema: Schema = new Schema({
     title: { type: String, required: true },
-    ownerId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    ownerId: { type: String, required: true },
     content: { type: Schema.Types.Mixed, default: {} },
     collaborators: [
         {
-            userId: { type: Schema.Types.ObjectId, ref: 'User' },
+            userId: { type: String},
             role: { type: String, enum: ['viewer', 'editor'], default: 'editor' },
         }
     ],

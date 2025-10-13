@@ -18,7 +18,7 @@ import LineHeightButton from './LineHeightButton'
 
 
 const Toolbar = () => {
-  const editor = useSelector((state: RootState) => state.editor.editor);
+  const {editor, autosaving} = useSelector((state: RootState) => state.editor);
 
 
   const section: {
@@ -116,6 +116,12 @@ const Toolbar = () => {
       {section[2].map((item) => (
         <ToolBarButton key={item.label} {...item} />
       ))}
+
+       <Separator orientation='vertical' className='!h-6 !bg-gray-300' />
+
+      {autosaving && (  <>    
+ <p className='text-gray-500'> Autosaving... </p> </> )}
+      
 
     </div>
   )

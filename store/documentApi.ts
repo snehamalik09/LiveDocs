@@ -1,18 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Types } from 'mongoose';
-
-export interface IDocument extends Document {
-    _id: string;
-    title: string;
-    ownerId: string;
-    content: any;
-    collaborators: {
-        userId: Types.ObjectId;
-        role: 'viewer' | 'editor';
-    }[];
-    createdAt: Date;
-    updatedAt: Date;
-}
+import { IDocument } from '@/models/Document.model';
 
 export const documentsApi = createApi({
     reducerPath: 'documentsApi',
@@ -38,7 +26,7 @@ export const documentsApi = createApi({
         updateDocument: builder.mutation<IDocument, { id: string; data: Partial<IDocument> }>({
             query: ({ id, data }) => ({
                 url: `documents/${id}`,
-                method: 'PUT',
+                method: 'PATCH',
                 body: data,
             }),
             invalidatesTags: ['Document'],
