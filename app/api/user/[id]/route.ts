@@ -6,19 +6,19 @@ interface Params{
   params : {id:string};
 }
 
-export async function GET(req: Request, {params}:Params) {
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
   await connectDB();
 
-  const userId = params.id;
 
-  if (!userId) {
+  if (!id) {
     return NextResponse.json({ error: "userId is required" }, { status: 400 });
   }
 
   const documents = await Document.find({
     $or: [
-      { ownerId: userId },
-      { "collaborators.userId": userId }
+      { ownerId: id },
+      { "collaborators.userId": id }
     ],
   }).sort({ updatedAt: -1 });
 

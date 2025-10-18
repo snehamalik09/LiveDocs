@@ -15,11 +15,15 @@ import ImageButton from './ImageButton'
 import AlignButton from './AlignButton'
 import FontSizeButton from './FontSizeButton'
 import LineHeightButton from './LineHeightButton'
+import FileButton from './FileButton'
+import ShareButton from './ShareButton'
+import { useParams } from 'next/navigation'
 
 
 const Toolbar = () => {
-  const {editor, autosaving} = useSelector((state: RootState) => state.editor);
-
+  const { editor, autosaving } = useSelector((state: RootState) => state.editor);
+  const params = useParams();
+  const id = params?.id as string;
 
   const section: {
     label: string;
@@ -85,43 +89,48 @@ const Toolbar = () => {
 
     ]
   return (
-    <div className="w-full bg-gray-50 mb-[5vh] bg-dark-100 border-b-2 border-gray-500 rounded-t-md flex items-center gap-3 p-3 shadow-sm">
+    <div className="w-full bg-gray-50 mb-[5vh] bg-dark-100 border-b-2 border-gray-500 rounded-t-md flex justify-between items-center p-3 shadow-sm">
+     <div className='flex items-center gap-3'>
+      <FileButton />
       {section[0].map((item) => (
         <ToolBarButton key={item.label} {...item} />
       ))}
 
       <Separator orientation='vertical' className='!h-6 !bg-gray-300' />
-      <FontFamilyButton/>
+      <FontFamilyButton />
 
       <Separator orientation='vertical' className='!h-6 !bg-gray-300' />
-      <HeadingButton/>
+      <HeadingButton />
 
       <Separator orientation='vertical' className='!h-6 !bg-gray-300' />
-      <FontSizeButton/>
+      <FontSizeButton />
 
       {section[1].map((item) => (
         <ToolBarButton key={item.label} {...item} />
       ))}
 
-      <TextColorButton/>
-      <HighlightButton/>
+      <TextColorButton />
+      <HighlightButton />
       <Separator orientation='vertical' className='!h-6 !bg-gray-300' />
-      <LinkButton/>
-      <ImageButton/>
-      <AlignButton/>
-      <LineHeightButton/>
-      
+      <LinkButton />
+      <ImageButton />
+      <AlignButton />
+      <LineHeightButton />
+
       {/* LIST */}
 
       {section[2].map((item) => (
         <ToolBarButton key={item.label} {...item} />
       ))}
 
-       <Separator orientation='vertical' className='!h-6 !bg-gray-300' />
+      <Separator orientation='vertical' className='!h-6 !bg-gray-300' />
 
-      {autosaving && (  <>    
- <p className='text-gray-500'> Autosaving... </p> </> )}
-      
+      {autosaving && (<>
+        <p className='text-gray-500'> Autosaving... </p> </>)}
+</div>
+        
+      <ShareButton id={id} />
+
 
     </div>
   )
@@ -129,4 +138,4 @@ const Toolbar = () => {
 
 export default Toolbar
 
-    
+

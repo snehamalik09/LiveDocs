@@ -8,6 +8,7 @@ export interface IDocument extends Document {
     content: any;
     collaborators: {
         userId: string;
+        email:string;
         role: 'viewer' | 'editor';
     }[];
     createdAt: Date;
@@ -21,6 +22,7 @@ const DocumentSchema: Schema = new Schema({
     collaborators: [
         {
             userId: { type: String},
+            email: {type:String},
             role: { type: String, enum: ['viewer', 'editor'], default: 'editor' },
         }
     ],

@@ -2,7 +2,8 @@ import { verifyWebhook } from '@clerk/nextjs/webhooks';
 import { NextRequest } from 'next/server';
 import User from '@/models/User.model';
 import { connectDB } from '@/lib/mongodb';
-
+import Document from '@/models/Document.model';
+  
 interface ClerkUserData {
   clerkId: string;
   name: string;
@@ -31,7 +32,13 @@ export async function POST(req: NextRequest) {
       console.log(`Received webhook with ID ${evt.data.id}`);
       console.log('Webhook payload:', evt.data);
 
-      if (newUser) return new Response('Webhook received', { status: 200 });
+      if (newUser) {
+        const result = await Document.updateMany(
+              { "collaborators.email": emailAddress, "collaborators.userId": null },
+              { $set: { "collaborators.$.userId": newUser._id } }
+            );
+        return new Response('Webhook received', { status: 200 });
+      }
     }
 
     return new Response('Event type not handled', { status: 200 });

@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const body = await req.json();
 
   const newDoc = await Document.create({
-    title: body.title,
+    title: body.title,  
     content: body.content || {},
     ownerId: body.ownerId,
     collaborators: body.collaborators || [],

@@ -2,6 +2,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Types } from 'mongoose';
 import { IDocument } from '@/models/Document.model';
 
+interface ShareButtonProps {
+    email:string;
+    role:string;
+}
+
 export const documentsApi = createApi({
     reducerPath: 'documentsApi',
     baseQuery: fetchBaseQuery({ baseUrl: '/api/' }),
@@ -31,6 +36,14 @@ export const documentsApi = createApi({
             }),
             invalidatesTags: ['Document'],
         }),
+        addCollaborator: builder.mutation<IDocument, { id: string; data:ShareButtonProps}>({
+            query: ({ id, data }) => ({
+                url: `documents/${id}/share`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['Document'],
+        }),
         deleteDocument: builder.mutation<{ success: boolean }, string>({
             query: (id) => ({
                 url: `documents/${id}`,
@@ -47,4 +60,5 @@ export const {
     useCreateDocumentMutation,
     useUpdateDocumentMutation,
     useDeleteDocumentMutation,
+    useAddCollaboratorMutation,
 } = documentsApi;

@@ -26,6 +26,7 @@ export const UserApi = createApi({
             query: (id) => `user/${id}`,
             providesTags: ['User'],
         }),
+
     }),
 });
 

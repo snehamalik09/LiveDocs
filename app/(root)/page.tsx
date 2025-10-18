@@ -10,9 +10,8 @@ import DocumentSkeleton from '@/components/DocumentSkeleton'
 import { useGetAllDocumentsByIdQuery } from '@/store/UserApi'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
-import { updateColumns } from '@tiptap/extension-table'
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const { user, isLoaded } = useUser();
   const { data: allDocuments, isLoading, isError, refetch } = useGetAllDocumentsByIdQuery(
@@ -82,7 +81,7 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
 
 
 
@@ -91,3 +90,6 @@ export default page
 // protectroute when user directly do /document/id on url
 // fontsize api is getting triggered unlimited times
 // add file dropdown on toolabr
+// before going to home we should ask if you want to save or not
+// save button, download button functionality
+// do we have to store document on cloudinary?
