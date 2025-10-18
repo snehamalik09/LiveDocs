@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       if (newUser) {
         const result = await Document.updateMany(
               { "collaborators.email": emailAddress, "collaborators.userId": null },
-              { $set: { "collaborators.$.userId": newUser._id } }
+              { $set: { "collaborators.$.userId": newUser.clerkId } }
             );
         return new Response('Webhook received', { status: 200 });
       }

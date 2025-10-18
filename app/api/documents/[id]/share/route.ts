@@ -23,7 +23,7 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
         if (user) {
             updatedDoc = await Document.findByIdAndUpdate(
                 id,
-                { $addToSet: { collaborators: { email, role, userId: user._id } } },
+                { $addToSet: { collaborators: { email, role, userId: user.clerkId } } },
                 { new: true }
             );
         } else {
