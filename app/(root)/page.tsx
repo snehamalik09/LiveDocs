@@ -87,10 +87,8 @@ export default Page
 // ToDO
 // deploy clerk to production
 // webhook for delete and update
-// protectroute when user directly do /document/id on url
 // fontsize api is getting triggered unlimited times
-// add file dropdown on toolabr
-// before going to home we should ask if you want to save or not
 // save button, download button functionality
 // do we have to store document on cloudinary?
-// getting 404 error when user clicking on link from email signing in but getting error
+// viewer editor permissions are not added yet
+// my personal gmail id is sending email for collaboration
