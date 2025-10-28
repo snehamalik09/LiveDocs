@@ -10,23 +10,36 @@ import {
   UserButton,
 } from '@clerk/nextjs'
 import { useGetDocumentByIdQuery } from '@/store/documentApi';
+import { useUser } from '@clerk/nextjs';
+import AccessDenied from '@/components/AccessDenied';
+import EditableTitle from '@/components/EditableTitle';
 
 const Document = () => {
   const params = useParams();
   const id = params?.id;
+  const { user } = useUser();
 
-const { data, isLoading, isError } = useGetDocumentByIdQuery( id as string, { skip: !id } );
+  const { data, isLoading, isError } = useGetDocumentByIdQuery(id as string, { skip: !id });
 
 
   if (isLoading) return <p>Loading document...</p>;
   if (isError || !data) return <p>Failed to load document</p>;
-  
+
+  const isAuthorized =
+    data.ownerId === user?.id ||
+    data.collaborators?.some(
+      (c: any) => c.userId === user?.id || c.email === user?.primaryEmailAddress?.emailAddress
+    );
+
+
+  if (!isAuthorized) {
+    return <AccessDenied/>
+  }
+
   return (
     <>
       <Header>
-        <div className='flex items-center justify-center gap-2 w-fit'>
-          <p className='document-title'>{data.title}</p>
-        </div>
+        <EditableTitle id={data._id} initialTitle={data.title} />
         <SignedOut>
           <SignInButton />
         </SignedOut>
@@ -34,7 +47,8 @@ const { data, isLoading, isError } = useGetDocumentByIdQuery( id as string, { sk
           <UserButton />
         </SignedIn>
       </Header>
-      <Toolbar/>
+
+      <Toolbar />
       <Editor documentId={data._id} initialContent={data.content} />
     </>
   );

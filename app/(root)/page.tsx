@@ -93,3 +93,4 @@ export default Page
 // before going to home we should ask if you want to save or not
 // save button, download button functionality
 // do we have to store document on cloudinary?
+// getting 404 error when user clicking on link from email signing in but getting error

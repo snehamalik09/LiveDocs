@@ -18,12 +18,12 @@ const FileButton = () => {
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1 cursor-pointer">
-        <Link href="/">
+      <DropdownMenuContent className="p-1 flex flex-col gap-y-1 cursor-pointer ">
+        <Link href="/" className='hover:bg-neutral-300/80 hover:rounded-lg p-1'>
             Home
         </Link>
-        <p>Save</p>
-        <p>Download</p>
+        <p className='hover:bg-neutral-300/80 hover:rounded-lg p-1'>Save</p>
+        <p className='hover:bg-neutral-300/80 hover:rounded-lg p-1'>Download</p>
       </DropdownMenuContent>
     </DropdownMenu>
   )
