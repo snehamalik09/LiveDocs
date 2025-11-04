@@ -92,3 +92,4 @@ export default Page
 // do we have to store document on cloudinary?
 // viewer editor permissions are not added yet
 // my personal gmail id is sending email for collaboration
+// one collaborator should be added one time only
